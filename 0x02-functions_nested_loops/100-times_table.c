@@ -1,50 +1,105 @@
 #include "main.h"
+
+void custom_print(int n);
+int count_digits(int cd);
+
 /**
- * print_times_table - prints out the n times table, starting with 0
- * @n: times table
+ * print_times_table - a function that prints
+ * n times table, starting with 0.
+ *
+ * Prototype: void print_times_table(int n);
+ *
+ * @n: number indicating the termiation point of timestable
  */
 void print_times_table(int n)
 {
-int x, y, z, k, t;
+if ((n >= 0) && (n <= 15))
+{
+	int i, j, ans;
 
-	for (x = 0; x <= n; x++)
+	for (i = 0; i <= n; i++)
 	{
-		for (y = 0; y <= n; y++)
+		for (j = 0; j <= n; j++)
 		{
-			z = x * y;
-			if (z == 0 && y == 0)
-				_putchar(z + '0');
-			else if (z > 99)
-			{
-				k = z % 10;
-				t = (z / 10) % 10;
-				z /= 100;
-				_putchar(',');
-				_putchar(' ');
-				_putchar(z + '0');
-				_putchar(t + '0');
-				_putchar(k + '0');
-			}
-			else if (z > 9)
-			{
-				k = z % 10;
-				z /= 10;
-				_putchar(',');
-				_putchar(' ');
-				_putchar(' ');
-				_putchar(z + '0');
-				_putchar(k + '0');
-
-			}
-			else
+			ans = i * j;
+			if ((j > 0))
 			{
 				_putchar(',');
-				_putchar(' ');
-				_putchar(' ');
-				_putchar(' ');
-				_putchar(z + '0');
+				if (ans < 10)
+				{
+					_putchar(' ');
+					_putchar(' ');
+					_putchar(' ');
+				}
+				else if (ans < 100)
+				{
+					_putchar(' ');
+					_putchar(' ');
+				}
+				else
+				{
+					_putchar(' ');
+				}
 			}
+			custom_print(ans);
 		}
 		_putchar('\n');
 	}
+}
+}
+
+/**
+ * custom_print - Print without libraries
+ * @n: number argument
+ */
+void custom_print(int n)
+{
+	int count = 0;
+	int number = n;
+	int loop, k, j;
+
+	do {
+		n /= 10;
+		++count;
+	} while (n != 0);
+
+	if (count <= 1)
+	{
+		_putchar(number + '0');
+	}
+	else
+	{
+			loop = 10;
+		for (k = 2; k < count; k++)
+		{
+			loop *= 10;
+		}
+		for (j = (count - 1); j >= 0; j--)
+		{
+			int temp_number;
+
+			temp_number = number / loop;
+			if (temp_number != 0)
+			{
+				_putchar((temp_number % 10) + '0');
+				loop /= 10;
+			}
+		}
+	}
+}
+
+/**
+ * count_digits - count digs
+ * @cd: arg
+ * Return: number of digits in the provided number
+ */
+int count_digits(int cd)
+{
+	int count = 0;
+
+	do {
+		cd /= 10;
+		++count;
+	} while (cd != 0);
+	return (count);
 }
