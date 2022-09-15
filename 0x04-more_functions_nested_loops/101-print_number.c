@@ -1,43 +1,38 @@
 #include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+int _putchar(char c);
 
 /**
- * print_number - print any integer using putchar
- * @n: integer to be printed
+ * print_number - like a hello world
+ *
+ * @n: params an integer
+ *
+ * No return
  */
+
 
 void print_number(int n)
 {
-	int count, x, y, k;
 
-	x = 0;
-	y = 1000000000;
+	unsigned int n1 = 0;
 
-	if (n == 0)
-		_putchar('0');
-	else if (n > 0)
-		n *= -1;
-	else
-	       	_putchar('-');
-	for (count = 0; count < 10; count++)
+	if  (n < 0)
 	{
-		if (n / y == 0 && x == 0)
-		{
-			y /= 10;
-			
-			continue;
-		}
-		else if (x == 0)
-		{
-			_putchar(-(n / y) + '0');
-			x += 1;
-		}
-		else
-		{
-			k = (-(n / y) % 10);
-			if (k < 0)
-				k *= -1;
-			_putchar(k + '0');
-		}
-		y /= 10;
+		n1 = -n;
+		_putchar('-');
 	}
+
+	else
+	{
+		n1 = n;
+	}
+
+	if (n1 / 10)
+	{
+		print_number(n1 / 10);
+	}
+
+	_putchar((n1 % 10) + '0');
 }
