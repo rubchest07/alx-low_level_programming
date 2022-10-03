@@ -1,43 +1,54 @@
 #include "main.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /**
- * alloc_grid - A C function that returns a
- * pointer to a 2 dimensional array of integers.
- *
- * Each element of the grid should be initialized to 0
- * The function should return NULL on failure
- * If width or height is 0 or negative, return NULL
- *
- * @width: number of columns
- * @height: number of rows
- *
- * Return: a pointer to a 2 dimensional array of integers. NULL on failure
+ * _strlen - get length
+ * @c: string
+ * Return: returns length
  */
-int **alloc_grid(int width, int height)
+
+int _strlen(char *c)
 {
-	int **a;
-	int i, j;
+	int len;
 
-	if (width <= 0 || height <= 0)
-		return (NULL);
-	a = (int **)malloc(sizeof(int *) * height);
-	if (a == NULL)
+	for (len = 0; c[len] != '\0'; len++)
+		;
+
+	return (len);
+}
+
+/**
+ * argstostr - concat str
+ * @ac: number of args
+ * @av: args
+ * Return: returns a pointer to the two strings concatenated, or NULL if fails
+ */
+
+char *argstostr(int ac, char **av)
+{
+	char *ptr;
+	int x, y, len = 0, c;
+
+	if (ac == 0 || av == NULL)
 		return (NULL);
 
-	for (i = 0; i < height; i++)
+	for (x = 0; x < ac; x++)
+		len += _strlen(av[x]);
+
+	ptr = malloc((len + ac + 1) * sizeof(char));
+
+	if (!ptr)
+		return (NULL);
+
+	for (x = 0; x < ac; x++)
 	{
-		a[i] = (int *)malloc(sizeof(int) * width);
-		if (a[i] == NULL)
-		{
-			for (j = 0; j < i; j++)
-				free(a[j]);
-			free(a);
-			return (NULL);
-		}
-		for (j = 0; j < width; j++)
-			a[i][j] = 0;
+		for (y = 0; av[x][y] != '\0'; y++, c++)
+			ptr[c] = av[x][y];
+		ptr[c] = '\n';
+		c++;
 	}
-
-	return (a);
+	ptr[c] = '\0';
+	return (ptr);
 }
