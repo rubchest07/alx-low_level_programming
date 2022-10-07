@@ -1,51 +1,67 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "main.h"
 
 /**
- * _realloc - reallocates a memory block using malloc and free (realloc)
- * @ptr: pointer
- * @old_size: size of old pointer
- * @new_size: size of new pointer
- * Return: new void pointer or NULL if it fails
+ * _memcpy - copies memory area
+ * @dest: destination string
+ * @src: source string
+ * @n: number of bytes to be copied
+ * Return: pointer to dest
  */
+char *_memcpy(char *dest, char *src, unsigned int n)
+{
+	char *ptr = dest;
 
+	while (n--)
+		*dest++ = *src++;
+	return (ptr);
+}
 
-
+/**
+ * _realloc - A C function that reallocates
+ * a memory block using malloc and free
+ *
+ * where ptr is a pointer to the memory previously
+ * allocated with a call to malloc: malloc(old_size)
+ * old_size is the size, in bytes, of the allocated space for ptr
+ * and new_size is the new size, in bytes of the new memory block
+ *
+ * The contents will be copied to the newly allocated space,
+ * in the range from the start of ptr up to the minimum
+ * of the old and new sizes
+ *
+ * If new_size > old_size, the “added” memory should not be initialized
+ * If new_size == old_size do not do anything and return ptr
+ * If ptr is NULL, then the call is equivalent to malloc(new_size),
+ * for all values of old_size and new_size
+ * If new_size is equal to zero, and ptr is not NULL, then the call
+ * is equivalent to free(ptr). Return NULL
+ * Don’t forget to free ptr when it makes sense
+ *
+ * @ptr: input pointer
+ * @old_size: size of old ptr
+ * @new_size: size of new ptr
+ *
+ * Return: reallocated ptr
+ */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	void *ptr1;
-	unsigned int x;
+	void *res = NULL;
 
+	if (new_size == old_size)
+		return (ptr);
 	if (!ptr)
 	{
-		ptr1 = malloc(new_size);
-		if (!ptr1)
-			return (NULL);
-		return (ptr1);
+		free(ptr);
+		res = malloc(new_size);
+		return (res);
 	}
-
-	if (new_size == 0 && ptr != NULL)
+	if (!new_size && ptr)
 	{
 		free(ptr);
 		return (NULL);
 	}
-
-	if (new_size == old_size)
-		return (ptr);
-
-	ptr1 = malloc(new_size);
-
-	if (!ptr1)
-		return (NULL);
-
-	if (new_size < old_size)
-		for (; x < new_size; x++)
-			((char *)ptr1)[x] = ((char *)ptr)[x];
-	else
-		for (; x < old_size; x++)
-			((char *)ptr1)[x] = ((char *)ptr)[x];
-
+	res = malloc(new_size);
+	_memcpy(res, ptr, old_size);
 	free(ptr);
-
-	return (ptr1);
+	return (res);
 }
